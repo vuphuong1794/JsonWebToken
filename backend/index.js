@@ -4,14 +4,16 @@ const cors = require("cors");
 const dotenv = require("dotenv")
 const mongoose = require("mongoose")
 const cookieParser = require("cookie-parser")
+const authRoute = require("./routes/auth")
 
 dotenv.config()
 
 //middlewares
-app.use(cors({origin: "*", credentials: true}));
-app.use(cookieParser);
+app.use(cors());
+app.use(cookieParser());
 app.use(express.json());
 
+//connect DB
 const connect = async () => {
     try {
       await mongoose.connect(process.env.MONGO);
@@ -26,6 +28,9 @@ const connect = async () => {
   mongoose.connection.on("disconnected", () => {
     console.log("MongoDB disconnected");
   });
+
+  //routes
+app.use("/v1/auth", authRoute);
 
 app.listen(8000, ()=>{
     connect();
