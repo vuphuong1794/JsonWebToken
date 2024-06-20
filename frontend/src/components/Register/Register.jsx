@@ -31,7 +31,7 @@ const Register = () => {
                 <input type="text" placeholder="Enter your username" onChange={(e)=>setUsername(e.target.value)}/>
                 <label>PASSWORD</label>
                 <input type="password" placeholder="Enter your password" onChange={(e)=>setPassword(e.target.value)}/>
-                <button type="submit"> Create account </button>
+                <button type="submit"> Create Account </button>
             </form>
         </section>
         
