@@ -3,6 +3,9 @@ import {
   loginFailed,
   loginStart,
   loginSuccess,
+  logOutFailed,
+  logOutStart,
+  logOutSuccess,
   registerFailed,
   registerStart,
   registerSuccess,
@@ -52,12 +55,23 @@ export const getAllUsers = async (accessToken, dispatch, axiosJWT) => {
   }
 };
 
-export const deleteUser = async (accessToken, dispatch, id, axiosJWT)=>{
+export const deleteUser = async (accessToken, dispatch, id, axiosJWT) => {
   dispatch(deleteUserStart())
   try{
     const res = await axiosJWT.delete("http://localhost:8000/v1/user/delete/"+ id, { headers: { token: `Bearer ${accessToken}` } }, {withCredentials: true})
     dispatch(deleUserSuccess(res.data))
   }catch(err){
     dispatch(deleteUserFailed(err.response.data))
+  }
+}
+
+export const logOut = async(dispatch, id, navigate, accessToken, axiosJWT) => {
+  dispatch(logOutStart())
+  try{
+    await axiosJWT.post("http://localhost:8000/v1/auth/logout", id, {headers: { token: `Bearer ${accessToken}` }}, {withCredentials: true})
+    dispatch(logOutSuccess())
+    navigate("/login")
+  }catch(err){
+    dispatch(logOutFailed())
   }
 }
