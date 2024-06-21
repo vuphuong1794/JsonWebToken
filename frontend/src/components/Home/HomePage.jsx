@@ -26,6 +26,7 @@ const HomePage = () => {
     }
   };
 
+  //kiem tra xem token con han hay khong neu khong sse goi api de refresh token moi
   axiosJWT.interceptors.request.use(
     async (config) => {
       let date = new Date();
